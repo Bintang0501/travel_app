@@ -1,21 +1,128 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:ionicons/ionicons.dart';
+import 'package:task_management_app/app/data/controller/auth_controller.dart';
+import 'package:task_management_app/app/routes/app_pages.dart';
 
 import '../controllers/login_controller.dart';
 
 class LoginView extends GetView<LoginController> {
+  final authC = Get.find<AuthController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('LoginView'),
-        centerTitle: true,
-      ),
-      body: Center(
-        child: Text(
-          'LoginView is working',
-          style: TextStyle(fontSize: 20),
+      backgroundColor: Colors.blue[100],
+      body: Container(
+        margin: context.isPhone
+            ? EdgeInsets.all(Get.width * 0.1)
+            : EdgeInsets.all(Get.height * 0.1),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(50),
+          color: Colors.white,
+        ),
+        child: Row(
+          children: [
+            // Biru
+            !context.isPhone
+                ? Expanded(
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(50),
+                          bottomLeft: Radius.circular(50),
+                        ),
+                        color: Colors.blue,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(30.0),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const [
+                              Text(
+                                'Selamat Datang',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 70,
+                                ),
+                              ),
+                              Text(
+                                'Di Travel Holiday',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 30,
+                                ),
+                              ),
+                              Text(
+                                'Mari bersantai bersama kami',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                ),
+                              ),
+                            ]),
+                      ),
+                    ),
+                  )
+                : const SizedBox(),
+            // Putih
+            Expanded(
+              child: Container(
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(50),
+                    bottomRight: Radius.circular(50),
+                  ),
+                ),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      context.isPhone
+                          ? Column(
+                              // crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: const [
+                                  Text(
+                                    'Selamat Datang',
+                                    style: TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 40,
+                                    ),
+                                  ),
+                                  Text(
+                                    'Di Travel Holiday',
+                                    style: TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                  Text(
+                                    'Mari bersantai bersama kami',
+                                    style: TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                ])
+                          : const SizedBox(),
+                      Image.asset(
+                        'assets/images/login.png',
+                        height: Get.height * 0.5,
+                      ),
+                      FloatingActionButton.extended(
+                        onPressed: () => authC.signInWithGoogle(),
+                        label: const Text('Sign In With Google'),
+                        icon: const Icon(
+                          Ionicons.logo_google,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ]),
+              ),
+            ),
+          ],
         ),
       ),
     );
